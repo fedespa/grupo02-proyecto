@@ -1,5 +1,6 @@
 package com.fede.proyectogrupo02
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -34,6 +35,9 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "No ingresó todos los datos!", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(this, "Inició sesión!", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, ListaActivity::class.java)
+                startActivity(intent)
+                finish()
             }
         }
     }
