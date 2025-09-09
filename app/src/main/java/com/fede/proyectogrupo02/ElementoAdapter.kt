@@ -2,11 +2,11 @@ package com.fede.proyectogrupo02
 
 import Elemento
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 
 class ElementoAdapter (
@@ -35,9 +35,14 @@ class ElementoAdapter (
         holder.weatherDescription.text = item.weatherDescription
         holder.temperature.text = item.temperature
 
-        holder.itemView.setOnClickListener(View.OnClickListener {
-            Toast.makeText(context, item.city, Toast.LENGTH_SHORT).show() }
-        )
+        // Para ver detalles del elemento
+        holder.itemView.setOnClickListener {
+            val intent = Intent(context, DetalleElementoActivity::class.java)
+            intent.putExtra("city", item.city)
+            intent.putExtra("temperature", item.temperature)
+            intent.putExtra("description", item.weatherDescription)
+            context.startActivity(intent)
+        }
     }
 
 }
