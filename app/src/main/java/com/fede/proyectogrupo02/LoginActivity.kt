@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,7 @@ class LoginActivity : AppCompatActivity() {
     lateinit var etEmail: EditText
     lateinit var etPassword: EditText
     lateinit var btnLogin: Button
+    lateinit var textRegister: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +31,7 @@ class LoginActivity : AppCompatActivity() {
         etEmail = findViewById(R.id.etEmail)
         etPassword = findViewById(R.id.etPassword)
         btnLogin = findViewById(R.id.btnLogin)
+        textRegister = findViewById(R.id.tvRegistro)
 
         btnLogin.setOnClickListener {
             if (etEmail.text.toString().isEmpty() || etPassword.text.toString().isEmpty()) {
@@ -40,5 +43,12 @@ class LoginActivity : AppCompatActivity() {
                 finish()
             }
         }
+
+        textRegister.setOnClickListener {
+            val intent = Intent(this, RegistroActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
     }
 }
