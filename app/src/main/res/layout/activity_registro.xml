@@ -8,19 +8,28 @@
     android:gravity="center"
     android:padding="32dp"
     android:background="@android:color/holo_blue_light"
-    tools:context=".LoginActivity">
+    tools:context=".RegistroActivity">
 
-    <!-- Título -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Inicio de sesión"
-        android:textSize="28sp"
+        android:text="Crear Cuenta"
+        android:textSize="26sp"
         android:textStyle="bold"
         android:textColor="@android:color/white"
         android:layout_marginBottom="32dp"/>
 
-    <!-- Campo de email -->
+    <!-- Nombre -->
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nombre completo"
+        android:padding="14dp"
+        android:background="@android:drawable/editbox_background_normal"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Correo -->
     <EditText
         android:id="@+id/etEmail"
         android:layout_width="match_parent"
@@ -31,7 +40,7 @@
         android:background="@android:drawable/editbox_background_normal"
         android:layout_marginBottom="16dp"/>
 
-    <!-- Campo de contraseña -->
+    <!-- Contraseña -->
     <EditText
         android:id="@+id/etPassword"
         android:layout_width="match_parent"
@@ -40,25 +49,36 @@
         android:inputType="textPassword"
         android:padding="14dp"
         android:background="@android:drawable/editbox_background_normal"
-        android:layout_marginBottom="24dp"/>
+        android:layout_marginBottom="16dp"/>
 
-    <!-- Botón de inicio de sesión -->
-    <Button
-        android:id="@+id/btnLogin"
+    <!-- Confirmar Contraseña -->
+    <EditText
+        android:id="@+id/etConfirmPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Iniciar Sesión"
+        android:hint="Confirmar contraseña"
+        android:inputType="textPassword"
+        android:padding="14dp"
+        android:background="@android:drawable/editbox_background_normal"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- Botón de registro -->
+    <Button
+        android:id="@+id/btnRegistrar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Registrarse"
         android:textColor="@android:color/white"
         android:background="@android:color/holo_blue_dark"
         android:padding="14dp"
         android:layout_marginBottom="16dp"/>
 
-    <!-- Texto de registro -->
+    <!-- Volver a login -->
     <TextView
-        android:id="@+id/tvRegistro"
+        android:id="@+id/tvLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="¿No tienes cuenta? Regístrate"
+        android:text="¿Ya tienes cuenta? Inicia sesión"
         android:textColor="@android:color/white"
         android:textStyle="bold"
         android:paddingTop="8dp"/>
