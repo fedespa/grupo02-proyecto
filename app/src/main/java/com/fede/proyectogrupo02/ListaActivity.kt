@@ -2,8 +2,10 @@ package com.fede.proyectogrupo02
 
 import Elemento
 import android.os.Bundle
+import android.view.Menu
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +15,7 @@ class ListaActivity : AppCompatActivity() {
 
     lateinit var rvElementos: RecyclerView
     lateinit var elementosAdapter: ElementoAdapter
+    lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +30,15 @@ class ListaActivity : AppCompatActivity() {
         rvElementos = findViewById(R.id.rvElementos)
         elementosAdapter = ElementoAdapter(getElementos(), this)
         rvElementos.adapter = elementosAdapter
+
+        toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar!!.title = resources.getString(R.string.titulo)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 
     private fun getElementos(): MutableList<Elemento> {

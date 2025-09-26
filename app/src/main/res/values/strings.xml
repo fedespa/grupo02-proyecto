@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ProyectoGrupo02</string>
+    <string name="titulo">Aplicación del clima</string>
+    <string name="boton_listado">Listado de ciudades</string>
+    <string name="boton_favoritos">Favoritos</string>
+    <string name="boton_cerrar_sesion">Cerrar sesión</string>
 </resources>
