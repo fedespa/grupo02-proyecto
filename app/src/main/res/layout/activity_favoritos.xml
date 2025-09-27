@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ListaActivity"
+    tools:context=".FavoritosActivity"
     android:padding="8dp">
 
     <include
@@ -13,13 +13,25 @@
         layout="@layout/primary_layout"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCiudades"
+        android:id="@+id/rvFavoritos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:paddingTop="?attr/actionBarSize"
-        tools:listitem="@layout/item_ciudad"
-
+        tools:listitem="@layout/item_ciudad_favorita"
         tools:ignore="MissingConstraints"/>
+
+    <TextView
+        android:id="@+id/tvEmptyMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Todavía no tienes favoritos!"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

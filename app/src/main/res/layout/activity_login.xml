@@ -43,6 +43,12 @@
         android:background="@android:drawable/editbox_background_normal"
         android:layout_marginBottom="24dp"/>
 
+    <CheckBox
+        android:id="@+id/cbRemember"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Recordar usuario" />
+
     <!-- Botón de inicio de sesión -->
     <Button
         android:id="@+id/btnLogin"

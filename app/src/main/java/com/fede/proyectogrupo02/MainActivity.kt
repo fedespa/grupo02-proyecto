@@ -13,6 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.fede.proyectogrupo02.ui.theme.ProyectoGrupo02Theme
 
+// FALTA CERRAR SESION (BORRAR SHARED PREFERENCES Y VOLVER AL LOGIN)
+// CONFIGURAR FAVORITOS
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

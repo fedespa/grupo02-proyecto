@@ -4,7 +4,7 @@
 
     <!-- Listado de ciudades -->
     <item
-        android:id="@+id/item_listado"
+        android:id="@+id/listado_ciudades"
         android:title="@string/boton_listado"
         app:showAsAction="never"/>
 

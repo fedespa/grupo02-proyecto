@@ -10,6 +10,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class RegistroActivity : AppCompatActivity() {
 
@@ -49,9 +53,33 @@ class RegistroActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            val intent = Intent(this, ListaActivity::class.java)
-            startActivity(intent)
-            finish()
+            val nombre = etName.text.toString()
+            val email = etEmail.text.toString()
+            val password = etPassword.text.toString()
+
+            val db = AppDatabase.getDatabase(this)
+
+            lifecycleScope.launch(Dispatchers.IO) {
+                // Verificar si ya existe
+                val existente = db.usuarioDao().getByEmail(email)
+
+                withContext(Dispatchers.Main) {
+                    if (existente != null) {
+                        Toast.makeText(this@RegistroActivity, "El email ya está registrado", Toast.LENGTH_SHORT).show()
+                    } else {
+                        val nuevoUsuario = Usuario(name = nombre, email = email, password = password)
+                        db.usuarioDao().insert(nuevoUsuario)
+
+                        Toast.makeText(this@RegistroActivity, "Usuario registrado con éxito", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this@RegistroActivity, ListaActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                }
+            }
+
+
+
         }
 
         textLogin.setOnClickListener {
