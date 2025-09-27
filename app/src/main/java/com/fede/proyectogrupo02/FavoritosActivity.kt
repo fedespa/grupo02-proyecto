@@ -1,41 +1,62 @@
 package com.fede.proyectogrupo02
 
-import Ciudad
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
-import java.util.ArrayList
+import kotlinx.coroutines.launch
 
-class ListaActivity : AppCompatActivity() {
+class FavoritosActivity : AppCompatActivity() {
 
-    lateinit var rvCiudades: RecyclerView
-    lateinit var ciudadesAdapter: CiudadAdapter
+    lateinit var rvFavoritos: RecyclerView
+    lateinit var ciudadesFavoritasAdapter: CiudadFavoritaAdapter
     lateinit var toolbar: Toolbar
+    private lateinit var tvEmptyMessage: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_lista)
+        setContentView(R.layout.activity_favoritos)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        rvCiudades = findViewById(R.id.rvCiudades)
-        ciudadesAdapter = CiudadAdapter(getElementos(), this)
-        rvCiudades.adapter = ciudadesAdapter
+        val db = AppDatabase.getDatabase(this)
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar!!.title = resources.getString(R.string.titulo)
+
+        tvEmptyMessage = findViewById(R.id.tvEmptyMessage)
+        rvFavoritos = findViewById(R.id.rvFavoritos)
+
+        lifecycleScope.launch {
+            val listaFavoritos = db.ciudadFavoritaDao().getAll()
+
+            if (listaFavoritos.isEmpty()) {
+                rvFavoritos.visibility = View.GONE
+                tvEmptyMessage.visibility = View.VISIBLE
+            } else {
+                rvFavoritos.visibility = View.VISIBLE
+                tvEmptyMessage.visibility = View.GONE
+                ciudadesFavoritasAdapter = CiudadFavoritaAdapter(listaFavoritos)
+                rvFavoritos.adapter = ciudadesFavoritasAdapter
+            }
+
+
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -46,8 +67,8 @@ class ListaActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.action_logout) {
             logout()
-        } else if (item.itemId == R.id.action_favorites) {
-            val intent = Intent(this, FavoritosActivity::class.java)
+        } else if (item.itemId == R.id.listado_ciudades) {
+            val intent = Intent(this, ListaActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -65,15 +86,4 @@ class ListaActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun getElementos(): MutableList<Ciudad> {
-        var ciudads: MutableList<Ciudad> = ArrayList();
-
-        ciudads.add(Ciudad("Buenos Aires", "25°C", "Soleado"))
-        ciudads.add(Ciudad("Madrid", "18°C", "Parcialmente nublado"))
-        ciudads.add(Ciudad("Nueva York", "12°C", "Lluvia ligera"))
-        ciudads.add(Ciudad("Tokio", "30°C", "Húmedo y caluroso"))
-        ciudads.add(Ciudad("París", "20°C", "Cielo despejado"))
-
-        return ciudads;
-    }
 }
