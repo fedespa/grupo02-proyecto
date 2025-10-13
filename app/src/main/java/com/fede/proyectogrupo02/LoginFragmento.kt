@@ -1,24 +1,24 @@
 package com.fede.proyectogrupo02
 
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class LoginActivity : AppCompatActivity() {
+
+class LoginFragmento: Fragment() {
 
     lateinit var etEmail: EditText
     lateinit var etPassword: EditText
@@ -26,29 +26,32 @@ class LoginActivity : AppCompatActivity() {
     lateinit var textRegister: TextView
     lateinit var cbRemember: CheckBox
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_login)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.login_fragmento, container, false)
+    }
 
-        etEmail = findViewById(R.id.etEmail)
-        etPassword = findViewById(R.id.etPassword)
-        btnLogin = findViewById(R.id.btnLogin)
-        textRegister = findViewById(R.id.tvRegistro)
-        cbRemember = findViewById(R.id.cbRemember)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        var preferencias = getSharedPreferences(resources.getString(R.string.sp_credenciales), MODE_PRIVATE)
+        etEmail = view.findViewById(R.id.etEmail)
+        etPassword = view.findViewById(R.id.etPassword)
+        btnLogin = view.findViewById(R.id.btnLogin)
+        textRegister = view.findViewById(R.id.tvRegistro)
+        cbRemember = view.findViewById(R.id.cbRemember)
+
+        var preferencias = requireContext().getSharedPreferences(
+            getString(R.string.sp_credenciales),
+            MODE_PRIVATE
+        )
         var emailGuardado = preferencias.getString(resources.getString(R.string.email), "")
         var passwordGuardado = preferencias.getString(resources.getString(R.string.password), "")
 
         if (emailGuardado!!.isNotEmpty() && passwordGuardado!!.isNotEmpty())
             iniciarActividad()
-
 
         btnLogin.setOnClickListener {
 
@@ -56,10 +59,10 @@ class LoginActivity : AppCompatActivity() {
             val password = etPassword.text.toString()
 
             if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "No ingresó todos los datos!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "No ingresó todos los datos!", Toast.LENGTH_SHORT).show()
             } else {
 
-                val db = AppDatabase.getDatabase(this)
+                val db = AppDatabase.getDatabase(requireContext())
 
                 lifecycleScope.launch {
                     val user = db.usuarioDao().login(email, password)
@@ -67,13 +70,16 @@ class LoginActivity : AppCompatActivity() {
                     withContext(Dispatchers.Main) {
                         if (user != null) {
                             if (cbRemember.isChecked){
-                                var preferencias = getSharedPreferences(resources.getString(R.string.sp_credenciales), MODE_PRIVATE)
+                                var preferencias = requireContext().getSharedPreferences(
+                                    getString(R.string.sp_credenciales),
+                                    MODE_PRIVATE
+                                )
                                 preferencias.edit().putString(resources.getString(R.string.email), email).apply()
                                 preferencias.edit().putString(resources.getString(R.string.password), password).apply()
                             }
                             iniciarActividad()
                         } else {
-                            Toast.makeText(this@LoginActivity, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -81,17 +87,15 @@ class LoginActivity : AppCompatActivity() {
         }
 
         textRegister.setOnClickListener {
-            val intent = Intent(this, RegistroActivity::class.java)
-            startActivity(intent)
-            finish()
+            (activity as? AuthActivity)?.irARegistro()
         }
     }
 
     private fun iniciarActividad(){
-        Toast.makeText(this@LoginActivity, "Inició sesión!", Toast.LENGTH_SHORT).show()
-        val intent = Intent(this@LoginActivity, ListaActivity::class.java)
+        Toast.makeText(requireContext(), "Inició sesión!", Toast.LENGTH_SHORT).show()
+        val intent = Intent(requireContext(), ListaActivity::class.java)
         startActivity(intent)
-        finish()
+        requireActivity().finish()
     }
 
 }

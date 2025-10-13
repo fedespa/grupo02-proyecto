@@ -81,7 +81,7 @@ class FavoritosActivity : AppCompatActivity() {
         preferencias.edit().remove(resources.getString(R.string.email)).apply()
         preferencias.edit().remove(resources.getString(R.string.password)).apply()
 
-        val intent = Intent(this, LoginActivity::class.java)
+        val intent = Intent(this, AuthActivity::class.java)
         startActivity(intent)
         finish()
     }

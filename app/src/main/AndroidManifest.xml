@@ -19,18 +19,14 @@
             android:name=".DetalleElementoActivity"
             android:exported="false" />
         <activity
-            android:name=".RegistroActivity"
-            android:exported="false" />
-        <activity
             android:name=".ListaActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".AuthActivity"
             android:exported="true"
             android:theme="@style/Theme.ProyectoGrupo02">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -40,3 +36,21 @@
     </application>
 
 </manifest>
+
+
+    <!--        <activity-->
+    <!--            android:name=".LoginActivity"-->
+    <!--            android:exported="true"-->
+    <!--            android:theme="@style/Theme.ProyectoGrupo02">-->
+    <!--            <intent-filter>-->
+    <!--                <action android:name="android.intent.action.MAIN" />-->
+
+    <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+    <!--            </intent-filter>-->
+    <!--        </activity>-->
+
+
+
+    <!--        <activity-->
+    <!--            android:name=".RegistroActivity"-->
+    <!--            android:exported="false" />-->
