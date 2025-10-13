@@ -2,20 +2,21 @@ package com.fede.proyectogrupo02
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class RegistroActivity : AppCompatActivity() {
+class RegistroFragmento: Fragment() {
+
 
     lateinit var etName: EditText
     lateinit var etEmail: EditText
@@ -24,32 +25,33 @@ class RegistroActivity : AppCompatActivity() {
     lateinit var btnRegister: Button
     lateinit var textLogin: TextView
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_registro)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.registro_fragmento, container, false)
+    }
 
-        etName = findViewById(R.id.etName)
-        etEmail = findViewById(R.id.etEmail)
-        etPassword = findViewById(R.id.etPassword)
-        etConfirmPassword = findViewById(R.id.etConfirmPassword)
-        btnRegister = findViewById(R.id.btnRegistrar)
-        textLogin = findViewById(R.id.tvLogin)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?){
+        super.onViewCreated(view, savedInstanceState)
+
+        etName = view.findViewById(R.id.etName)
+        etEmail = view.findViewById(R.id.etEmail)
+        etPassword = view.findViewById(R.id.etPassword)
+        etConfirmPassword = view.findViewById(R.id.etConfirmPassword)
+        btnRegister = view.findViewById(R.id.btnRegistrar)
+        textLogin = view.findViewById(R.id.tvLogin)
 
         btnRegister.setOnClickListener {
             if (etEmail.text.toString().isEmpty() || etPassword.text.toString().isEmpty() ||
                 etConfirmPassword.text.toString().isEmpty() || etName.text.toString().isEmpty()) {
-                Toast.makeText(this, "No ingresó todos los datos!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "No ingresó todos los datos!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             if (etPassword.text.toString() != etConfirmPassword.text.toString()) {
-                Toast.makeText(this, "Las contraseñas no coinciden!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Las contraseñas no coinciden!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -57,7 +59,7 @@ class RegistroActivity : AppCompatActivity() {
             val email = etEmail.text.toString()
             val password = etPassword.text.toString()
 
-            val db = AppDatabase.getDatabase(this)
+            val db = AppDatabase.getDatabase(requireContext())
 
             lifecycleScope.launch(Dispatchers.IO) {
                 // Verificar si ya existe
@@ -65,27 +67,26 @@ class RegistroActivity : AppCompatActivity() {
 
                 withContext(Dispatchers.Main) {
                     if (existente != null) {
-                        Toast.makeText(this@RegistroActivity, "El email ya está registrado", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "El email ya está registrado", Toast.LENGTH_SHORT).show()
                     } else {
                         val nuevoUsuario = Usuario(name = nombre, email = email, password = password)
                         db.usuarioDao().insert(nuevoUsuario)
 
-                        Toast.makeText(this@RegistroActivity, "Usuario registrado con éxito", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this@RegistroActivity, ListaActivity::class.java)
+                        Toast.makeText(requireContext(), "Usuario registrado con éxito", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(requireContext(), ListaActivity::class.java)
                         startActivity(intent)
-                        finish()
+                        requireActivity().finish()
                     }
                 }
             }
-
-
-
         }
 
         textLogin.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
+            (activity as? AuthActivity)?.irALogin()
         }
+
     }
+
+
+
 }
