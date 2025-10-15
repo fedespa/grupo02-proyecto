@@ -40,8 +40,15 @@ class CiudadAdapter (
             intent.putExtra("city", item.city)
             intent.putExtra("temperature", item.temperature)
             intent.putExtra("description", item.weatherDescription)
+            intent.putExtra("lat", item.lat)
+            intent.putExtra("lon", item.lon)
             context.startActivity(intent)
         }
+    }
+
+    fun addCiudad(ciudad: Ciudad) {
+        ciudades.add(ciudad)
+        notifyItemInserted(ciudades.size - 1)
     }
 
 }

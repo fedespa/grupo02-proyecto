@@ -13,11 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.fede.proyectogrupo02.ui.theme.ProyectoGrupo02Theme
 
-<<<<<<< HEAD
-=======
-// FALTA CERRAR SESION (BORRAR SHARED PREFERENCES Y VOLVER AL LOGIN)
-// CONFIGURAR FAVORITOS
->>>>>>> origin/main
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

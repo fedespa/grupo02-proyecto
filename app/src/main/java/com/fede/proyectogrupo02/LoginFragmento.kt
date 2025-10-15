@@ -43,6 +43,12 @@ class LoginFragmento: Fragment() {
         textRegister = view.findViewById(R.id.tvRegistro)
         cbRemember = view.findViewById(R.id.cbRemember)
 
+        cbRemember.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                Toast.makeText(requireContext(), "Recordar usuario activado ✅", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         var preferencias = requireContext().getSharedPreferences(
             getString(R.string.sp_credenciales),
             MODE_PRIVATE

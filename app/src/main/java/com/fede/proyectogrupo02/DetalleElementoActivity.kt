@@ -33,6 +33,8 @@ class DetalleElementoActivity : AppCompatActivity() {
         val nombreCiudad = intent.getStringExtra("city") ?: ""
         val temperatura = intent.getStringExtra("temperature") ?: ""
         val descripcion = intent.getStringExtra("description") ?: ""
+        val lat = intent.getDoubleExtra("lat", 0.0)
+        val lon = intent.getDoubleExtra("lon", 0.0)
 
         tvCity.text = nombreCiudad
         tvTemp.text = temperatura
@@ -42,9 +44,9 @@ class DetalleElementoActivity : AppCompatActivity() {
 
         btnAgregarFavorito.setOnClickListener {
             val ciudad = CiudadFavorita(
-                nombre = nombreCiudad,
-                temperatura = temperatura,
-                clima = descripcion
+                name = nombreCiudad,
+                lat = lat,
+                lon = lon
             )
 
             lifecycleScope.launch {

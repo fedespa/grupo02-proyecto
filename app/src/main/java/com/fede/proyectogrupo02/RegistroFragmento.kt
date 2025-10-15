@@ -62,7 +62,6 @@ class RegistroFragmento: Fragment() {
             val db = AppDatabase.getDatabase(requireContext())
 
             lifecycleScope.launch(Dispatchers.IO) {
-                // Verificar si ya existe
                 val existente = db.usuarioDao().getByEmail(email)
 
                 withContext(Dispatchers.Main) {
