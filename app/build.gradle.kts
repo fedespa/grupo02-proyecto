@@ -4,6 +4,7 @@ plugins {
     id("org.jetbrains.kotlin.kapt")
 }
 
+
 android {
     namespace = "com.fede.proyectogrupo02"
     compileSdk = 36
@@ -40,6 +41,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.14"
     }
+
 }
 
 dependencies {
@@ -59,6 +61,12 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     kapt(libs.androidx.room.compiler)
+
+    implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
+    annotationProcessor("com.squareup.moshi:moshi-kotlin-codegen:1.14.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

@@ -6,9 +6,9 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "ciudad_favorita_entity")
 data class CiudadFavorita (
-    @ColumnInfo(name = "city") var nombre: String,
-    @ColumnInfo(name = "temperature") var temperatura: String,
-    @ColumnInfo(name = "weatherDescription") var clima: String,
+    @ColumnInfo(name = "name") var name: String,
+    @ColumnInfo(name = "lat") var lat: Double,
+    @ColumnInfo(name = "lon") var lon: Double,
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
