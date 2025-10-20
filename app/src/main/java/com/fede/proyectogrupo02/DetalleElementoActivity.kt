@@ -1,6 +1,7 @@
 package com.fede.proyectogrupo02
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -35,10 +36,15 @@ class DetalleElementoActivity : AppCompatActivity() {
         val descripcion = intent.getStringExtra("description") ?: ""
         val lat = intent.getDoubleExtra("lat", 0.0)
         val lon = intent.getDoubleExtra("lon", 0.0)
+        val origen = intent.getStringExtra("origen")
 
         tvCity.text = nombreCiudad
         tvTemp.text = temperatura
         tvDesc.text = descripcion
+
+        if (origen == "favoritos") {
+            btnAgregarFavorito.visibility = View.GONE
+        }
 
         val db = AppDatabase.getDatabase(this)
 

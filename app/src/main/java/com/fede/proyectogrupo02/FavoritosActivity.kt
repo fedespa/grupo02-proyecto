@@ -57,7 +57,7 @@ class FavoritosActivity : AppCompatActivity() {
             } else {
                 rvFavoritos.visibility = View.VISIBLE
                 tvEmptyMessage.visibility = View.GONE
-                ciudadesFavoritasAdapter = CiudadAdapter(mutableListOf(), this@FavoritosActivity)
+                ciudadesFavoritasAdapter = CiudadAdapter(mutableListOf(), this@FavoritosActivity, true)
                 rvFavoritos.adapter = ciudadesFavoritasAdapter
 
                 cargarFavoritos(listaFavoritos)

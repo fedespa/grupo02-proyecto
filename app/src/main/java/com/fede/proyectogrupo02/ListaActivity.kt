@@ -49,7 +49,7 @@ class ListaActivity : AppCompatActivity() {
 
         progressBar = findViewById(R.id.progressBar)
         rvCiudades = findViewById(R.id.rvCiudades)
-        ciudadesAdapter = CiudadAdapter(mutableListOf(), this)
+        ciudadesAdapter = CiudadAdapter(mutableListOf(), this, false)
         rvCiudades.adapter = ciudadesAdapter
 
         progressBar.visibility = View.VISIBLE

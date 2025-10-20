@@ -11,7 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 
 class CiudadAdapter (
     var ciudades: MutableList<Ciudad>,
-    var context: Context
+    var context: Context,
+    var esFavoritos: Boolean = false
 ): RecyclerView.Adapter<CiudadAdapter.ElementoViewHolder>() {
 
     class ElementoViewHolder (view: View): RecyclerView.ViewHolder(view) {
@@ -42,6 +43,7 @@ class CiudadAdapter (
             intent.putExtra("description", item.weatherDescription)
             intent.putExtra("lat", item.lat)
             intent.putExtra("lon", item.lon)
+            intent.putExtra("origen", if (esFavoritos) "favoritos" else "lista")
             context.startActivity(intent)
         }
     }
